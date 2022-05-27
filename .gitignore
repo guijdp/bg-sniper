@@ -1,0 +1,13 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# py env
+bg-sniper-env
+
+#cfg
+instance
+
+# Coverage output
+.coverage
