@@ -9,7 +9,7 @@ from models.store import Store
 class Boardgame(BaseEntity, Base):
     __tablename__ = "boardgames"
 
-    name = Column(String(130))
+    name = Column(String(130), unique=True)
     stores = relationship(
         Store.__name__,
         secondary=boardgame_store,
