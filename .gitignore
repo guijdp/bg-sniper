@@ -12,3 +12,6 @@ bg-sniper-env
 
 # Unrelated files
 .private
+
+#Database
+*.sqlite
