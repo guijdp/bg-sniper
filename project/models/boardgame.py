@@ -13,7 +13,7 @@ class Boardgame(BaseEntity, Base):
     stores = relationship(
         Store.__name__,
         secondary=boardgame_store,
-        back_populates=Store.__tablename__,
+        back_populates="boardgames",
     )
 
     def __init__(self, name: str):

@@ -11,9 +11,7 @@ class Store(BaseEntity, Base):
     name = Column(String(130))
     country_id = Column(Integer, ForeignKey("countries.id"))
     country = relationship("Country", back_populates="stores")
-    boardgames = relationship(
-        "Boardgame", secondary=boardgame_store, back_populates="stores"
-    )
+    boardgames = relationship("Boardgame", secondary=boardgame_store)
 
     def __init__(self, name: str):
         self.name = name
