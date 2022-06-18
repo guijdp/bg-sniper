@@ -15,3 +15,5 @@ bg-sniper-env
 
 #Database
 *.sqlite
+
+reference.html

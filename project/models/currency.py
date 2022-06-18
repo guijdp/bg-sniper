@@ -3,7 +3,7 @@ from unicodedata import name
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
-from models.base_entity import Base, BaseEntity
+from project.models.base_entity import Base, BaseEntity
 
 
 class Currency(BaseEntity, Base):

@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Float, ForeignKey, Integer
 from sqlalchemy.orm import relationship
 
-from models.base_entity import Base, BaseEntity
+from project.models.base_entity import Base, BaseEntity
 
 
 class HistoricalPrice(BaseEntity, Base):
@@ -9,7 +9,9 @@ class HistoricalPrice(BaseEntity, Base):
 
     price = Column(Float)
     boardgame_id = Column(Integer, ForeignKey("boardgames.id"))
-    boardgames = relationship("Boardgame")
+    boardgame = relationship("Boardgame")
+    store_id = Column(Integer, ForeignKey("stores.id"))
+    store = relationship("Store")
 
     def __init__(self, price: float):
         self.price = price

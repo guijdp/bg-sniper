@@ -1,20 +1,15 @@
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
-from models.base_entity import Base, BaseEntity
-from models.boardgame_store import boardgame_store
-from models.store import Store
+from project.models.base_entity import Base, BaseEntity
+from project.models.boardgame_store import boardgame_store
+from project.models.store import Store
 
 
 class Boardgame(BaseEntity, Base):
     __tablename__ = "boardgames"
 
     name = Column(String(130), unique=True)
-    stores = relationship(
-        Store.__name__,
-        secondary=boardgame_store,
-        back_populates="boardgames",
-    )
 
     def __init__(self, name: str):
         self.name = name
