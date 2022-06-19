@@ -17,20 +17,20 @@ class BaseBlueprint(ABC):
         pass
 
     @abstractmethod
-    def check_prices(self) -> None:
+    def check_store(self) -> None:
         """Checks page and returns"""
         pass
 
-    def get_base_url(self):
+    def get_base_url(self) -> str:
         return self.base_url
 
-    def get_total_pages(self):
+    def get_total_pages(self) -> int:
         return self.total_pages
 
-    def get_next_page(self):
+    def get_next_page(self) -> int:
         return self.next_page
 
-    def create_language(self):
+    def create_language(self) -> None:
         language = self.session.select(
             select(Language).where(Language.name == self.language)
         )

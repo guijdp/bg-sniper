@@ -1,5 +1,3 @@
-from locale import currency
-
 import requests
 from lxml import etree
 from project.blueprints.base_blueprint import BaseBlueprint
@@ -27,7 +25,7 @@ class FantazyWelt(BaseBlueprint):
         )
         self.total_pages = int(total_pages)
 
-    def check_prices(self):
+    def check_store(self):
         html_page = requests.get(f"{self.base_url}_s{self.next_page}").text
         tree = etree.HTML(str(html_page))
         page_tree = tree.xpath(
