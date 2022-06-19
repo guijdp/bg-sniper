@@ -1,9 +1,6 @@
-from unicodedata import name
-
+from project.models.base_entity import Base, BaseEntity
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
-
-from project.models.base_entity import Base, BaseEntity
 
 
 class Currency(BaseEntity, Base):

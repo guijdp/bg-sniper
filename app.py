@@ -1,5 +1,7 @@
 from time import sleep
 
+import nltk
+
 from project import create_app
 from project.blueprints.fantazy_welt import FantazyWelt
 from project.session import SQLiteSession

@@ -1,6 +1,5 @@
-from sqlalchemy import Column, ForeignKey, Table
-
 from project.models.base_entity import Base
+from sqlalchemy import Column, ForeignKey, Table
 
 boardgame_store = Table(
     "boardgame_store",

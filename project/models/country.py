@@ -1,7 +1,6 @@
+from project.models.base_entity import Base, BaseEntity
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
-
-from project.models.base_entity import Base, BaseEntity
 
 
 class Country(BaseEntity, Base):

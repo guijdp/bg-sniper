@@ -1,9 +1,5 @@
-from sqlalchemy import Column, String
-from sqlalchemy.orm import relationship
-
 from project.models.base_entity import Base, BaseEntity
-from project.models.boardgame_store import boardgame_store
-from project.models.store import Store
+from sqlalchemy import Column, String
 
 
 class Boardgame(BaseEntity, Base):

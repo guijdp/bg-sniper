@@ -1,11 +1,7 @@
+from locale import currency
+
 import requests
 from lxml import etree
-from sqlalchemy import desc
-from sqlalchemy.sql import select
-
-from project.models.boardgame import Boardgame
-from project.models.historical_price import HistoricalPrice
-from project.models.store import Store
 from project.blueprints.base_blueprint import BaseBlueprint
 from project.session import DB
 
@@ -13,10 +9,11 @@ from project.session import DB
 class FantazyWelt(BaseBlueprint):
     def __init__(self, session: DB):
         self.session = session
-        self.store_name = "Fantazy Welt"
+        self.base_url = "https://www.fantasywelt.de/Alle-deutschen-Brettspiele"
         self.country = "Germany"
         self.currency = "EUR"
-        self.base_url = "https://www.fantasywelt.de/Alle-deutschen-Brettspiele"
+        self.language = "de"
+        self.store_name = "Fantazy Welt"
         self.next_page = 1
         self.init_total_pages()
 
@@ -37,6 +34,12 @@ class FantazyWelt(BaseBlueprint):
             '//*[@id="product-list"][1]//*[@class="product-wrapper col-xs-6 col-lg-4 col-xl-3"]'
         )
 
+        currency = self.create_currency()
+        language = self.create_language()
+
+        country = self.create_country(currency)
+        store = self.create_store(country)
+
         for game in page_tree:
             name = " ".join(game.xpath(".//*[@class='title']/a/text()")[0].split())
             price = (
@@ -45,8 +48,7 @@ class FantazyWelt(BaseBlueprint):
                 .replace(",", ".")
             )
 
-            store = self.create_store()
             boardgame = self.create_boardgame(name)
-            self.create_historical_price(price, boardgame, store)
+            self.create_historical_price(price, boardgame, store, language)
 
         self.next_page = 1 if self.next_page > self.total_pages else self.next_page + 1
