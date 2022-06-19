@@ -1,15 +1,17 @@
+import os
+from logging import Logger
+
 import requests
 from lxml import etree
 from project.blueprints.base_blueprint import BaseBlueprint
 from project.session import DB
-import os
-from bs4 import BeautifulSoup
 
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 
 class BoardGameGeek(BaseBlueprint):
-    def __init__(self, session: DB):
+    def __init__(self, session: DB, logger: Logger):
+        super(BoardGameGeek, self).__init__(logger)
         self.session = session
         self.base_url = "https://boardgamegeek.com/browse/boardgame"
         self.next_page = 1
@@ -32,6 +34,7 @@ class BoardGameGeek(BaseBlueprint):
 
         for game in page_tree:
             name = " ".join(game.xpath(".//div[2]/a/text()"))
-            self.create_boardgame(name)
+            print(name)
+            self.create_boardgame(name, None)
 
         self.next_page = 1 if self.next_page > self.total_pages else self.next_page + 1

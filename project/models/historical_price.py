@@ -2,8 +2,6 @@ from project.models.base_entity import Base, BaseEntity
 from sqlalchemy import Column, Float, ForeignKey, Integer
 from sqlalchemy.orm import relationship
 
-from project.models.language import Language
-
 
 class HistoricalPrice(BaseEntity, Base):
     __tablename__ = "historical_prices"

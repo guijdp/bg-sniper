@@ -1,3 +1,5 @@
+from logging import Logger
+
 import requests
 from lxml import etree
 from project.blueprints.base_blueprint import BaseBlueprint
@@ -5,7 +7,9 @@ from project.session import DB
 
 
 class FantazyWelt(BaseBlueprint):
-    def __init__(self, session: DB):
+
+    def __init__(self, session: DB, logger: Logger):
+        super(FantazyWelt, self).__init__(logger)
         self.session = session
         self.base_url = "https://www.fantasywelt.de/Alle-deutschen-Brettspiele"
         self.country = "Germany"
@@ -18,11 +22,8 @@ class FantazyWelt(BaseBlueprint):
     def init_total_pages(self):
         html_page = requests.get(self.base_url).text
         tree = etree.HTML(str(html_page))
-        total_pages = (
-            tree.xpath('//*[@id="paginations-select"]/a/text()')[1]
-            .strip()
-            .split(" ")[1]
-        )
+        total_pages = (tree.xpath('//*[@id="paginations-select"]/a/text()')
+                       [1].strip().split(" ")[1])
         self.total_pages = int(total_pages)
 
     def check_store(self):
@@ -39,12 +40,11 @@ class FantazyWelt(BaseBlueprint):
         store = self.create_store(country)
 
         for game in page_tree:
-            name = " ".join(game.xpath(".//*[@class='title']/a/text()")[0].split())
+            name = " ".join(
+                game.xpath(".//*[@class='title']/a/text()")[0].split())
             price = (
-                game.xpath(".//*[@class='price_wrapper']/strong/span/text()")[0]
-                .split(" ")[0]
-                .replace(",", ".")
-            )
+                game.xpath(".//*[@class='price_wrapper']/strong/span/text()")
+                [0].split(" ")[0].replace(",", "."))
 
             boardgame = self.create_boardgame(name)
             self.create_historical_price(price, boardgame, store, language)

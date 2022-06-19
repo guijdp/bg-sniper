@@ -3,7 +3,6 @@ from typing import TypeVar
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.sql import select
 
 from project.models.base_entity import Base
 from project.models.boardgame import Boardgame
@@ -17,6 +16,7 @@ T = TypeVar("T")
 
 
 class DB(ABC):
+
     def __init__(self):
         """Constructor"""
         pass
@@ -47,6 +47,7 @@ class DB(ABC):
 
 
 class SQLiteSession(DB):
+
     def __init__(self):
         self.db = self.create_connection("sqlite:///sqlalchemy.sqlite")
         self.create_session()
@@ -59,8 +60,12 @@ class SQLiteSession(DB):
         self.session = sessionmaker(bind=self.engine)()
 
     def insert(self, T):
-        self.session.add(T)
-        self.session.commit()
+        try:
+            self.session.add(T)
+            self.session.commit()
+        except Exception as e:
+            self.session.rollback()
+            raise e
 
     def select(self, T):
         return self.session.execute(T).first()
